@@ -1,0 +1,29 @@
+{
+  "id": "string",
+  "name": "string",
+  "scientificName": "string",
+  "type": "string",
+  "imageUrl": "string",
+  "level": int,
+  "requirements": {
+    "options": [
+      { "biomes": ["string"], "amount": int }
+    ]
+  },
+  "staticAbilites": ["string"],
+  "abilities": [
+    {
+      "name": "string",
+      "type": "string",
+      "cost": { "boolean": },
+      "effect": {
+        "action": "string",
+        "cardName": "string"
+      }
+    }
+  ],
+  "deckRules": {
+    "maxCopies": "string"
+  },
+  "flavorText": "string."
+}

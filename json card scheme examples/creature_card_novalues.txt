@@ -1,0 +1,29 @@
+{
+  "id": ,
+  "name": ,
+  "scientificName": ,
+  "type": ,
+  "imageUrl": ,
+  "level": ,
+  "requirements": {
+    "options": [
+      { "biomes": [], "amount":  }
+    ]
+  },
+  "staticAbilites": [" "],
+  "abilities": [
+    {
+      "name": ,
+      "type": ,
+      "cost": { "": },
+      "effect": {
+        "action": ,
+        "cardName": 
+      }
+    }
+  ],
+  "deckRules": {
+    "maxCopies": 
+  },
+  "flavorText": 
+}
