@@ -1,0 +1,65 @@
+# ==========================
+# Java / Maven / Spring Boot
+# ==========================
+# Compiled class files
+*.class
+
+# Build directories
+target/
+build/
+out/
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Maven specific
+dependency-reduced-pom.xml
+release.properties
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+*.log
+
+# ==========================
+# IDEs
+# ==========================
+# IntelliJ IDEA
+*.iml
+.idea/
+*.iws
+*.ipr
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VSCode
+.vscode/
+
+# ==========================
+# OS-specific
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Spring Boot
+# ==========================
+# Ignore properties if you have secrets
+application-*.yml
+application-*.properties
+
+# ==========================
+# Node.js / JavaScript client
+# ==========================
+node_modules/
+dist/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
