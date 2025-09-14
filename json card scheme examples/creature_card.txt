@@ -1,7 +1,7 @@
 {
   "id": "creature-001",
   "type": "creature",
-  "tags" :["prey", "ave", "insectivore"],
+  "tags" :["prey", "ave"],
   "name": "Feral Pigeon",
   "scientificName": "Columba livia f. urbana",
   "imageUrl": "user/images/creatures/pigeon.png",
@@ -29,7 +29,7 @@
       "name": "Urban Swarm",
       "type": "activated",
       "cost": { "tap": true },
-   swim   "effect": {"
+      "effect": {"
        " "action": "playFromHand",
         "cardName": "Columba livia f. urbana"
       }
