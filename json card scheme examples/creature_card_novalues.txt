@@ -1,8 +1,9 @@
 {
   "id": ,
+  "type": ,
   "name": ,
   "scientificName": ,
-  "type": ,
+  "tags:",
   "imageUrl": ,
   "level": ,
   "requirements": {
@@ -10,7 +11,19 @@
       { "biomes": [], "amount":  }
     ]
   },
-  "staticAbilites": [" "],
+  "evassionType": [
+		{
+			"name": "",
+			"tap": true
+		},
+	
+		{
+			#exempel2
+			"name": "",
+			"tap" : false
+		} 
+	
+	],
   "abilities": [
     {
       "name": ,

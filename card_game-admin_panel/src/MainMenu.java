@@ -1,12 +1,12 @@
 
 import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
 public class MainMenu extends GUI{
-    //private addCardMenu addCardMenu;
+    private addCardMenu addCardMenu;
     private JButton editCardBtn;
     private JButton addCardBtn;
     private JButton removeCardBtn;
@@ -51,7 +51,7 @@ public class MainMenu extends GUI{
         if(e.getSource() == addCardBtn){
             System.out.println("add card");
             addCardBtn.setEnabled(false);
-           // addCardMenu = new addCardMenu();
+            addCardMenu = new addCardMenu();
             frame.dispose();
 
 

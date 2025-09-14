@@ -26,6 +26,9 @@ public class GUI implements ActionListener {
         if(width !=null && height != null){
             panel.setPreferredSize(new Dimension(width,height));
         }
+
+            panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
         container.add(panel);
         return panel;
     }

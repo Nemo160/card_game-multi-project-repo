@@ -1,0 +1,148 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+public class addCardMenu extends GUI{
+    JFrame cardFrame;
+    private List<JTextField> resourceField = new ArrayList<JTextField>();
+    private JButton addResourceBtn;
+    private JTextField cardIDField, cardNameField,scientificNameField;
+    private JRadioButton biomeButton,creatureButton;
+    private JPanel biomePanel;
+    private JPanel creaturePanel, costPanel;
+    private JPanel formPanel;
+    private final String cardID = new String();
+    private final String[] trueOrFales = {"true","false"};
+    private final String[] cardType = {"Biome","Creature"};
+    private final String name = new String();
+    private final String[] tags = {
+            "predator","prey","carnivore", "herbivore","omnivore","insectivore",
+            "mammal", "fish","amphibian","reptile", "bird","invertebrate",
+            "domesticated", "wild"
+    };
+    private final String imageUrl = new String();
+    private final String[] level = {"0","1","2","3","4","5"};
+
+    private final String[] biomeType = {"Grassland","Forest", "Tundra","Desert","Urban","Freshwater","Marine"};
+
+    public addCardMenu(){
+        cardFrame = createJFrame("Add Card Menu", 600,650);
+        formPanel = new JPanel();
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        row1.setMaximumSize(new Dimension(200,50));
+        row1.setBackground(Color.magenta);
+
+        //Radio buttons
+        biomeButton = new JRadioButton("Biome");
+        creatureButton = new JRadioButton("Creature");
+        ButtonGroup group1 = new ButtonGroup();
+        group1.add(biomeButton);
+        group1.add(creatureButton);
+        biomeButton.addActionListener(this);
+        creatureButton.addActionListener(this);
+
+        JPanel radioButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        radioButtonPanel.add(biomeButton);
+        radioButtonPanel.add(creatureButton);
+        radioButtonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        row1.add(radioButtonPanel);
+
+        //biome and creature panels
+        radioButtonPanel.setMaximumSize(new Dimension(200,30));
+        radioButtonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+
+        formPanel.add(row1);
+        formPanel.add(Box.createRigidArea(new Dimension(0,10)));
+         cardFrame.add(formPanel, BorderLayout.CENTER);
+        cardFrame.setVisible(true);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == addResourceBtn){
+            JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT
+            ));
+            JLabel label = new JLabel("Biome");
+            JTextField field = new JTextField(10);
+
+            panel.add(label);
+            panel.add(field);
+
+            resourceField.add(field);
+            costPanel.add(panel);
+            costPanel.revalidate();
+            costPanel.repaint();
+        }
+        if(e.getSource() == biomeButton) {
+            if(biomePanel == null){
+                biomePanel = optionBiome();
+                formPanel.add(biomePanel);
+            }
+            if(creaturePanel != null)
+            creaturePanel.setVisible(false);
+            biomePanel.setVisible(true);
+        }
+        else if(e.getSource() == creatureButton){
+            if(creaturePanel == null){
+                creaturePanel = optionCreature();
+                formPanel.add(creaturePanel);
+            }
+            if(biomePanel != null){
+                biomePanel.setVisible(false);
+                creaturePanel.setVisible(true);
+
+            }
+            creaturePanel.setVisible(true);
+            }
+        formPanel.revalidate();
+        formPanel.repaint();
+    }
+
+    private JPanel optionBiome(){
+        JPanel biomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel underCon = new JLabel("PAGE UNDER CONSTRUCTION");
+        underCon.setPreferredSize(new Dimension(300,300));
+        underCon.setAlignmentX(Component.CENTER_ALIGNMENT);
+        biomePanel.add(new JLabel("Biome Name:"));
+        biomePanel.add(new JTextField(15));
+        biomePanel.add(new JTextField(5));
+        biomePanel.add(underCon);
+        return biomePanel;
+    }
+
+    private JPanel optionCreature(){
+        JPanel creaturePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel namesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        namesPanel.add(new JLabel("id:"));
+        cardIDField = new JTextField(5);
+        namesPanel.add(cardIDField);
+
+        namesPanel.add(new JLabel("Card Name:"));
+        cardNameField = new JTextField(10);
+        namesPanel.add(cardNameField);
+
+        namesPanel.add(new JLabel("Scientific Name:"));
+        scientificNameField = new JTextField(10);
+        namesPanel.add(scientificNameField);
+
+        namesPanel.add(new JLabel("Card LVL"));
+        JComboBox<String> input_cardLevelField = new JComboBox<>(level);
+        namesPanel.add(input_cardLevelField);
+
+        costPanel = new JPanel();
+        costPanel.setLayout(new BoxLayout(costPanel,BoxLayout.Y_AXIS));
+        costPanel.add(new JLabel("Resource Cost:"));
+        costPanel.setBackground(Color.magenta);
+        addResourceBtn = new JButton("Add Resource");
+        addResourceBtn.addActionListener(this);
+
+
+        costPanel.add(addResourceBtn);
+        creaturePanel.add(namesPanel);
+        creaturePanel.add(costPanel);
+        return creaturePanel;
+    }
+}
