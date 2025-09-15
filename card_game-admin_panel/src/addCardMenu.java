@@ -24,7 +24,7 @@ public class addCardMenu extends GUI{
     private final String[] biomeType = {"Grassland","Forest", "Tundra","Desert","Urban","Freshwater","Marine"};
 
     public addCardMenu(){
-        cardFrame = createJFrame("Add Card Menu", 600,650);
+        cardFrame = createJFrame("Add Card Menu", 650,700);
         formPanel = new JPanel();
         formPanel.setLayout(new BoxLayout(formPanel,BoxLayout.Y_AXIS));
         JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -121,12 +121,14 @@ public class addCardMenu extends GUI{
         JComboBox<String> input_cardLevelField = new JComboBox<>(level);
         namesPanel.add(input_cardLevelField);
 
-        //cost panel
+        //Resource panel
         costPanel = new JPanel();
         costPanel.setLayout(new BoxLayout(costPanel,BoxLayout.Y_AXIS));
         costPanel.add(new JLabel("Resource Cost:"));
         addResourceBtn = new JButton("Add Resource");
         addResourceBtn.addActionListener(this);
+        costPanel.add(addResourceBtn);
+
 
 
         //evasionPanel
@@ -153,10 +155,15 @@ public class addCardMenu extends GUI{
 
 
         //flavor panel
+        JPanel flavorPanel = new JPanel();
         JTextArea flavorTextField = new JTextArea(5,20);
-        JPanel flavorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        flavorTextField.setLineWrap(true);
+        flavorTextField.setWrapStyleWord(true);
+        JScrollPane scrollPane = new JScrollPane(flavorTextField);
+        scrollPane.setPreferredSize(new Dimension(200,100)); // keeps it stable
         flavorPanel.add(new JLabel("Flavor Text:"));
-        flavorPanel.add(flavorTextField);
+        flavorPanel.add(scrollPane);
+
 
         //add panels to creaturePanel
         creaturePanel.add(namesPanel);
@@ -164,11 +171,11 @@ public class addCardMenu extends GUI{
         creaturePanel.add(evasionPanel);
         creaturePanel.add(abilityPanel);
         creaturePanel.add(flavorPanel);
-        costPanel.add(addResourceBtn);
 
-        namesPanel.setBackground(Color.yellow);
+        //debugging backgrounds
         formPanel.setBackground(Color.gray);
         creaturePanel.setBackground(Color.darkGray);
+        namesPanel.setBackground(Color.yellow);
         costPanel.setBackground(Color.pink);
         abilityPanel.setBackground(Color.red);
 
@@ -179,10 +186,7 @@ public class addCardMenu extends GUI{
     }
 
     private void addAbility(){
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT
-        ));
-
-
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panel.add(new JLabel("Name:"));
         JTextField abilityNameField = new JTextField(10);
         panel.add(abilityNameField);
@@ -192,7 +196,19 @@ public class addCardMenu extends GUI{
         panel.add(abilityTappable);
 
         panel.add(new JLabel("Effect:"));
-        panel.add(new JTextField(10));
+        JTextField abilityEffectField = new JTextField(10);
+        panel.add(abilityEffectField);
+
+        JButton removeBtn = new JButton("Remove");
+        panel.add(removeBtn);
+
+        //adds remove button
+        removeBtn.addActionListener(e -> {
+            abilityPanel.remove(panel);
+            abilityPanel.revalidate();
+            abilityPanel.repaint();
+        });
+
         abilityPanel.add(panel);
         abilityPanel.revalidate();
         abilityPanel.repaint();
@@ -215,6 +231,19 @@ public class addCardMenu extends GUI{
         //save to list
         resourceField.add(biomeTypeField);
         resourceAmountField.add(amountField);
+        JButton removeBtn = new JButton("Remove");
+        panel.add(removeBtn);
+
+        removeBtn.addActionListener(e -> {
+            // Remove UI panel
+            costPanel.remove(panel);
+            costPanel.revalidate();
+            costPanel.repaint();
+
+            // Remove references from lists
+            resourceField.remove(biomeTypeField);
+            resourceAmountField.remove(amountField);
+        });
 
         costPanel.add(panel);
         costPanel.revalidate();
