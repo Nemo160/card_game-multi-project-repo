@@ -156,13 +156,23 @@ public class addCardMenu extends GUI{
 
         //flavor panel
         JPanel flavorPanel = new JPanel();
-        JTextArea flavorTextField = new JTextArea(5,20);
+        JTextArea flavorTextField = new JTextArea(5,20); //Flavor FIELD
         flavorTextField.setLineWrap(true);
         flavorTextField.setWrapStyleWord(true);
-        JScrollPane scrollPane = new JScrollPane(flavorTextField);
-        scrollPane.setPreferredSize(new Dimension(200,100)); // keeps it stable
+        JScrollPane flavorScrollPane = new JScrollPane(flavorTextField);
+        flavorScrollPane.setPreferredSize(new Dimension(200,100)); // keeps it stable
         flavorPanel.add(new JLabel("Flavor Text:"));
-        flavorPanel.add(scrollPane);
+        flavorPanel.add(flavorScrollPane);
+
+        //Ability description
+        JPanel abilityDescPanel = new JPanel();
+        JTextArea abilityDesc_Text = new JTextArea(5,20); //ability description FIELD
+        abilityDesc_Text.setLineWrap(true);
+        abilityDesc_Text.setWrapStyleWord(true);
+        JScrollPane ability_DescScrollPane = new JScrollPane(abilityDesc_Text);
+        ability_DescScrollPane.setPreferredSize(new Dimension(200,100)); // keeps it stable
+        abilityDescPanel.add(new JLabel("Ability Description:"));
+        abilityDescPanel.add(ability_DescScrollPane);
 
 
         //add panels to creaturePanel
@@ -171,6 +181,7 @@ public class addCardMenu extends GUI{
         creaturePanel.add(evasionPanel);
         creaturePanel.add(abilityPanel);
         creaturePanel.add(flavorPanel);
+        creaturePanel.add(abilityDescPanel);
 
         //debugging backgrounds
         formPanel.setBackground(Color.gray);
