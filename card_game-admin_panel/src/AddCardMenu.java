@@ -4,26 +4,28 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class addCardMenu extends GUI{
+public class AddCardMenu extends GUI{
     JFrame cardFrame;
     private List<JComboBox> resourceField = new ArrayList<>();
     private List<JComboBox> resourceAmountField = new ArrayList<>();
+    private JComboBox<String> input_cardLevelField;
     private JButton addResourceBtn, addAbilityBtn;
     private JTextField cardIDField, cardNameField,scientificNameField;
-    private JRadioButton biomeButton,creatureButton;
+    private JRadioButton biomeBtn, creatureBtn;
+    private JButton createCardBtn;
     private JPanel formPanel;
     private JPanel biomePanel;
     private JPanel creaturePanel, costPanel, abilityPanel;
     private final String[] trueOrFales = {"true","false"};
+    private final String[] level = {"0","1","2","3","4","5"};
+    private final String[] biomeType = {"Grassland","Forest", "Tundra","Desert","Urban","Freshwater","Marine"};
     private final String[] tags = {
             "predator","prey","carnivore", "herbivore","omnivore","insectivore",
             "mammal", "fish","amphibian","reptile", "bird","invertebrate",
             "domesticated", "wild"
     };
-    private final String[] level = {"0","1","2","3","4","5"};
-    private final String[] biomeType = {"Grassland","Forest", "Tundra","Desert","Urban","Freshwater","Marine"};
 
-    public addCardMenu(){
+    public AddCardMenu(){
         cardFrame = createJFrame("Add Card Menu", 650,700);
         formPanel = new JPanel();
         formPanel.setLayout(new BoxLayout(formPanel,BoxLayout.Y_AXIS));
@@ -32,29 +34,54 @@ public class addCardMenu extends GUI{
         row1.setBackground(Color.RED);
 
         //Radio buttons
-        biomeButton = new JRadioButton("Biome");
-        creatureButton = new JRadioButton("Creature");
+        biomeBtn = new JRadioButton("Biome");
+        creatureBtn = new JRadioButton("Creature");
         ButtonGroup group1 = new ButtonGroup();
-        group1.add(biomeButton);
-        group1.add(creatureButton);
-        biomeButton.addActionListener(this);
-        creatureButton.addActionListener(this);
+        group1.add(biomeBtn);
+        group1.add(creatureBtn);
+        biomeBtn.addActionListener(this);
+        creatureBtn.addActionListener(this);
 
         JPanel radioButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        radioButtonPanel.add(biomeButton);
-        radioButtonPanel.add(creatureButton);
+        radioButtonPanel.add(biomeBtn);
+        radioButtonPanel.add(creatureBtn);
         radioButtonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         row1.add(radioButtonPanel);
 
-        //biome and creature panels
+        //biome and creature panels BUTTONS
         radioButtonPanel.setMaximumSize(new Dimension(200,30));
         radioButtonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
 
         formPanel.add(row1);
         formPanel.add(Box.createRigidArea(new Dimension(0,10)));
         cardFrame.add(formPanel, BorderLayout.CENTER);
         cardFrame.setVisible(true);
+    }
+
+    public void getFields(){
+        String id = cardIDField.getText();
+        String name = cardNameField.getText();
+        String scientificName = scientificNameField.getText();
+        String LVL = (String) input_cardLevelField.getSelectedItem();
+
+        for (int i = 0; i < resourceField.size(); i++) {
+            String resource = (String) resourceField.get(i).getSelectedItem();
+            String amount   = (String) resourceAmountField.get(i).getSelectedItem();
+
+            System.out.println("Resource: " + resource + ", Amount: " + amount);
+        }
+
+
+
+
+        //get all the fields, put them into strings, arrays of strings. Send as parameter into Parser. Parse and end
+        System.out.println(id);
+        System.out.println(LVL);
+
+
+    }
+    private void validateFields(){
+
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -64,7 +91,7 @@ public class addCardMenu extends GUI{
         if(e.getSource() == addAbilityBtn){
             addAbility();
         }
-        if(e.getSource() == biomeButton) {
+        if(e.getSource() == biomeBtn) {
             if(biomePanel == null){
                 biomePanel = optionBiome();
                 formPanel.add(biomePanel);
@@ -73,10 +100,11 @@ public class addCardMenu extends GUI{
             creaturePanel.setVisible(false);
             biomePanel.setVisible(true);
         }
-        else if(e.getSource() == creatureButton){
+        else if(e.getSource() == creatureBtn){
             if(creaturePanel == null){
                 creaturePanel = optionCreature();
                 formPanel.add(creaturePanel);
+
             }
             if(biomePanel != null){
                 biomePanel.setVisible(false);
@@ -85,6 +113,9 @@ public class addCardMenu extends GUI{
             }
             creaturePanel.setVisible(true);
             }
+        else if (e.getSource() == createCardBtn) {
+            getFields();
+        }
         formPanel.revalidate();
         formPanel.repaint();
     }
@@ -118,7 +149,7 @@ public class addCardMenu extends GUI{
         namesPanel.add(scientificNameField);
 
         namesPanel.add(new JLabel("Card LVL"));
-        JComboBox<String> input_cardLevelField = new JComboBox<>(level);
+        input_cardLevelField = new JComboBox<>(level);
         namesPanel.add(input_cardLevelField);
 
         //Resource panel
@@ -128,8 +159,6 @@ public class addCardMenu extends GUI{
         addResourceBtn = new JButton("Add Resource");
         addResourceBtn.addActionListener(this);
         costPanel.add(addResourceBtn);
-
-
 
         //evasionPanel
         JPanel evasionPanel = new JPanel();
@@ -141,7 +170,6 @@ public class addCardMenu extends GUI{
         JComboBox<String> evasionType = new JComboBox<>(trueOrFales);
         evasionPanel.add(evasionType);
 
-
         JPanel tagsPanel = new JPanel();
         tagsPanel.setLayout(new BoxLayout(tagsPanel,BoxLayout.X_AXIS));
 
@@ -152,7 +180,6 @@ public class addCardMenu extends GUI{
         addAbilityBtn = new JButton("Add ability");
         addAbilityBtn.addActionListener(this);
         abilityPanel.add(addAbilityBtn);
-
 
         //flavor panel
         JPanel flavorPanel = new JPanel();
@@ -174,6 +201,13 @@ public class addCardMenu extends GUI{
         abilityDescPanel.add(new JLabel("Ability Description:"));
         abilityDescPanel.add(ability_DescScrollPane);
 
+        //UPLOAD
+        createCardBtn = new JButton("Create Card");
+        JPanel lastRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        lastRow.setMaximumSize(new Dimension(180,50));
+        lastRow.setBackground(Color.RED);
+        createCardBtn.addActionListener(this);
+        lastRow.add(createCardBtn);
 
         //add panels to creaturePanel
         creaturePanel.add(namesPanel);
@@ -182,6 +216,7 @@ public class addCardMenu extends GUI{
         creaturePanel.add(abilityPanel);
         creaturePanel.add(flavorPanel);
         creaturePanel.add(abilityDescPanel);
+        creaturePanel.add(lastRow);
 
         //debugging backgrounds
         formPanel.setBackground(Color.gray);
@@ -189,7 +224,6 @@ public class addCardMenu extends GUI{
         namesPanel.setBackground(Color.yellow);
         costPanel.setBackground(Color.pink);
         abilityPanel.setBackground(Color.red);
-
 
         addAbility();
         addResource();
@@ -260,6 +294,5 @@ public class addCardMenu extends GUI{
         costPanel.revalidate();
         costPanel.repaint();
     }
-
 
 }

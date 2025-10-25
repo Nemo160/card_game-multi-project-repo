@@ -3,7 +3,8 @@
 public class Main {
     public static void main(String[] args) {
 
-       // MainMenu menu = new MainMenu();
-        addCardMenu addcard = new addCardMenu();
+       //ainMenu menu = new MainMenu();
+        AddCardMenu addcard = new AddCardMenu();
+
     }
 }
