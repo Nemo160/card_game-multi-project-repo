@@ -444,41 +444,52 @@ public class AddCardMenu extends JPanel implements ActionListener {
         creature_tagsPanel.repaint();
     }
     public void creature_getFields(){
-        CreatureCard c = creature_getInput();
-        //get inputs in resource panel
+       // CreatureCard c = creature_getInput();
+
+        //create list for resources from GUI.
+        ArrayList<Resource> resourcesList = new ArrayList<>();
+        ArrayList<Ability> abilitiesList = new ArrayList<>();
+        ArrayList<String> tagsList = new ArrayList<>();
         for (int i = 0; i < creature_resourceField.size(); i++) {
-            String resource = (String) creature_resourceField.get(i).getSelectedItem();
-            String amount   = (String) creature_resourceAmountField.get(i).getSelectedItem();
-            c.addResource(new Resource(resource,amount));
+            Resource r = new Resource();
+            r.setAmount((String) creature_resourceField.get(i).getSelectedItem());
+            r.setResource((String) creature_resourceAmountField.get(i).getSelectedItem());
+            resourcesList.add(r);
 
         }
         //get inputs in ability panel
         for (int i = 0; i < creature_abilityNameField.size(); i++) {
-            String abilityName = creature_abilityNameField.get(i).getText().trim();
-            String abilityTap   = (String) creature_abilityTappableField.get(i).getSelectedItem();
-            String abilityEffect   = creature_abilityEffectField.get(i).getText();
-            c.addAbility(new Ability(abilityName,abilityTap,abilityEffect));
+            Ability ab = new Ability();
+            ab.setName(creature_abilityNameField.get(i).getText().trim());
+            ab.setTappable((String) creature_abilityTappableField.get(i).getSelectedItem());
+            ab.setEffect(creature_abilityEffectField.get(i).getText());
+            abilitiesList.add(ab);
         }
 
         for (JTextField i: creature_tagNameField) {
-            String tag = i.getText().trim();
-            c.addTag(tag);
+            tagsList.add(i.getText().trim());
         }
+        //create creature card with inputs and pass the card to the card parser.
+        creatureCard card = cardInputs(resourcesList,abilitiesList,tagsList);
 
         CardParser p = new CardParser();
-        p.parseCreatureJSON(c);
-        //System.out.println(c);
+        p.parseCreatureJSON(card);
+        System.out.println(card);
     }
-    private CreatureCard creature_getInput() {
-        String id = creature_cardIdField.getText().trim();
-        String CardName = creature_cardNameField.getText().trim();
-        String scientificName = creature_scientificNameField.getText().trim();
-        String LVL = (String) creature_input_cardLevelField.getSelectedItem();
-        String flavorText = flavorTextField.getText().trim();
-        String abilityDesc = abilityDesc_Text.getText().trim();
-        String evasionN = creature_evasionName.getText().trim();
-        String evasionT = (String) creature_evasionType.getSelectedItem();
-        //create new card
-        return new CreatureCard(id,CardName,scientificName,LVL,flavorText,abilityDesc, evasionN, evasionT);
+    private creatureCard cardInputs(ArrayList<Resource> res, ArrayList<Ability> abi, ArrayList<String> tag){
+        creatureCard c = new creatureCard();
+        c.setId(creature_cardIdField.getText().trim()); //;
+        c.setCardName(creature_cardNameField.getText().trim());
+        c.setScientificName(creature_scientificNameField.getText().trim());
+        c.setCardLVL( (String) creature_input_cardLevelField.getSelectedItem());
+        c.setFlavorText(flavorTextField.getText().trim());
+        c.setAbilityDesc(abilityDesc_Text.getText().trim());
+        c.setEvasionName(creature_evasionName.getText().trim());
+        c.setEvasionType((String) creature_evasionType.getSelectedItem());
+        c.setResources(res);
+        c.setTags(tag);
+        c.setResources(res);
+        c.setAbilities(abi);
+        return c;
     }
 }

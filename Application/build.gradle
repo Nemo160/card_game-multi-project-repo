@@ -1,6 +1,7 @@
 plugins {
     id 'application'
     id 'java'
+    id("io.freefair.lombok") version "9.1.0"
 }
 
 repositories {
@@ -14,4 +15,6 @@ application {
 dependencies {
     implementation project(':common')
     implementation 'com.google.code.gson:gson:2.13.2'
+   // annotationProcessor("org.projectlombok:lombok:1.18.42")
+
 }
