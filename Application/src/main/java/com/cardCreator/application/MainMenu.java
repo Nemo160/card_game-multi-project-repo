@@ -1,6 +1,7 @@
 package com.cardCreator.application;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -12,6 +13,7 @@ public class MainMenu{
     private JFrame frame;
     public MainMenu(){
         frame = new JFrame("Card Editor");
+        frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(750,900);
 
@@ -72,7 +74,7 @@ public class MainMenu{
         mainPanel.add(editCardMenu, "EditCardMenu");
 
 
-        frame.add(mainPanel);
+        frame.add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
 
     }

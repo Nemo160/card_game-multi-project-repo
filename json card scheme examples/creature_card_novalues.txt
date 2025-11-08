@@ -1,0 +1,42 @@
+{
+  "id": ,
+  "type": ,
+  "name": ,
+  "scientificName": ,
+  "tags:",
+  "imageUrl": ,
+  "level": ,
+  "requirements": {
+    "options": [
+      { "biomes": [], "amount":  }
+    ]
+  },
+  "evassionType": [
+		{
+			"name": "",
+			"tap": true
+		},
+	
+		{
+			#exempel2
+			"name": "",
+			"tap" : false
+		} 
+	
+	],
+  "abilities": [
+    {
+      "name": ,
+      "type": ,
+      "cost": { "": },
+      "effect": {
+        "action": ,
+        "cardName": 
+      }
+    }
+  ],
+  "deckRules": {
+    "maxCopies": 
+  },
+  "flavorText": 
+}

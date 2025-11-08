@@ -1,0 +1,42 @@
+{
+  "id": "creature-001",
+  "category": "creature",
+  "tags" :["prey", "ave"],
+  "name": "Feral Pigeon",
+  "scientificName": "Columba livia f. urbana",
+  "imageUrl": "user/images/creatures/pigeon.png",
+  "level": 1,
+  "requirements": {
+    "options": [
+      { "biomes": ["urban"], "amount": 1 }
+    ]
+  },
+  "evassionType": [
+		{
+			"name": "fly",
+			"type": "active"
+		},
+	
+		{
+			#exempel2
+			"name": "swim",
+			"type" : "passive"
+		} 
+	
+"	"],fly
+  "abilities": [
+    {
+      "name": "Urban Swarm",
+      "type": "activated",
+      "cost": { "tap": true },
+      "effect": {"
+       " "action": "playFromHand",
+        "cardName": "Columba livia f. urbana"
+      }
+    }
+  ],
+  "deckRules": {
+    "maxCopies": "unlimited"
+  },
+  "flavorText": "Thrives in cities worldwide."
+}

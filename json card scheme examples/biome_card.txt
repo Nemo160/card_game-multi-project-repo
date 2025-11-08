@@ -1,0 +1,18 @@
+{
+  "id": "biome-003",
+  "category": "biome",
+  "name": "Urban Area",
+  "imageUrl": "/images/urban.png",
+  "provides": [
+    { "resource": "urban", "amount": 2 }
+  ],
+  "abilities": [
+    {
+      "name": "Pollution",
+      "type": "active/passive",
+      "effectDesc": "What the effect does" 
+    }
+  ],
+  "flavorText": "A place of both opportunity and danger."
+}
+	

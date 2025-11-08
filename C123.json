@@ -1,0 +1,36 @@
+{
+  "id": "C123",
+  "category": "creature",
+  "Name": "pidgeon",
+  "scientificName": "niggasaurus",
+  "cardLVL": "2",
+  "evasionName": "Giant",
+  "evasionType": "true",
+  "flavorText": "this is flavortext",
+  "resources": [
+    {
+      "resource": "1",
+      "amount": "Forest"
+    },
+    {
+      "resource": "4",
+      "amount": "Grassland"
+    }
+  ],
+  "abilities": [
+    {
+      "name": "gonzales",
+      "Type": "passive",
+      "effect": "SPEEDSTER"
+    },
+    {
+      "name": "Kanye",
+      "Type": "activated",
+      "effect": "Its a lifestyle"
+    }
+  ],
+  "tags": [
+    "GOAT",
+    "black"
+  ]
+}

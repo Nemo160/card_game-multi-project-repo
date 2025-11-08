@@ -11,59 +11,69 @@ import java.util.List;
 public class AddCardMenu extends JPanel implements ActionListener {
     private CardLayout cardLayout;
     private JPanel parentPanel;
-    private JButton backBtn;
-    //Get fields
-    //CREATURE OPTION
+    private JPanel formPanel;
+    private JPanel biomePanel,creaturePanel;
+
+    //navbar
+    private JRadioButton biomeBtn, creatureBtn;
+
+    //creature fields
     private List<JComboBox> creature_resourceField = new ArrayList<>();
     private List<JComboBox> creature_resourceAmountField = new ArrayList<>();
-
     private List<JTextField> creature_abilityNameField = new ArrayList<>();
     private List<JTextField> creature_abilityEffectField = new ArrayList<>();
-    private List<JComboBox> creature_abilityTappableField = new ArrayList<>();
-
+    private List<JComboBox> creature_abilityTypeField = new ArrayList<>();
     private List<JTextField> creature_tagNameField = new ArrayList<>();
+
     private JComboBox<String> creature_input_cardLevelField, creature_evasionType;
     private JButton creature_addResourceBtn, creature_addAbilityBtn, creature_createCardBtn, creature_addTagBtn;
     private JTextField creature_cardIdField, creature_cardNameField, creature_scientificNameField, creature_evasionName;
-    private JTextArea flavorTextField,abilityDesc_Text;
-    private JRadioButton biomeBtn, creatureBtn;
-    private JPanel formPanel;
-    private JPanel biomePanel,creaturePanel;
+    private JTextArea creature_flavorTextField, creature_abilityDescField;
     private JPanel creature_costPanel, creature_abilityPanel, creature_tagsPanel;
+
+    //biome fields
+    private JTextField biome_nameField, biome_idField;
+    private JTextField biome_abilityNameField;
+    private JComboBox<String> biome_activeTypeField;
+    private JTextArea biome_flavorTextField,biome_abilityDescField;
+    private JButton biome_addResourceBtn, biome_createCardBtn;
+    private JPanel biome_resourcePanel;
+    private ArrayList<JComboBox> biome_resourceField = new ArrayList<>();
+    private ArrayList<JComboBox> biome_resourceAmountField = new ArrayList<>();
+
+    //constants
     private final String[] activeType = {"activated", "passive"};
     private final String[] trueOrFales = {"true","false"};
     private final String[] level = {"0","1","2","3","4","5"};
     private final String[] biomeType = {"Grassland","Forest", "Tundra","Desert","Urban","Freshwater","Marine"};
     private final String tagExample = (
-            "Examples: predator, prey, carnivore, herbivore, omnivore, insectivore, mammal, fish, amphibian, reptile, bird, invertebrate, domesticated, wild");
-//    private final String[] tagExample = {
-//            "predator","prey","carnivore", "herbivore","omnivore","insectivore",
-//            "mammal", "fish","amphibian","reptile", "bird","invertebrate",
-//            "domesticated", "wild"
-//    };
-
-    //BIOME OPTION
-    private JTextField biome_nameField, biome_idField;
-
-    //TODO WORK ON optionBiome(). The same as creature but now for biome.
-    //TODO Create different menus and send an instance of each and add them to parent_navigationPanel
-
+            "Examples: predator, prey, " +
+                    "carnivore, herbivore, omnivore, " +
+                    "insectivore, mammal, fish, amphibian, reptile, " +
+                    "bird, invertebrate, domesticated, wild");
 
     public AddCardMenu(CardLayout cardLayout, JPanel parentPanel){
         this.cardLayout = cardLayout;
         this.parentPanel = parentPanel;
 
         setLayout(new BorderLayout());
+        setBackground(new Color(245,245,245));
+        setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
+
+        UIManager.put("Label.font", new Font("Segoe UI", Font.PLAIN, 13));
+        UIManager.put("Button.font", new Font("Segoe UI", Font.BOLD, 13));
+        UIManager.put("TitledBorder.font", new Font("Segoe UI", Font.BOLD, 14));
+
         add(new NavigationBar(this),BorderLayout.NORTH);
 
         formPanel = new JPanel();
         formPanel.setLayout(new BoxLayout(formPanel,BoxLayout.Y_AXIS));
+        formPanel.setBackground(new Color(245,245,245));
 
-        JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        row1.setMaximumSize(new Dimension(180,50));
-        row1.setBackground(Color.RED);
+        JPanel typeSelector = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        typeSelector.setAlignmentX(Component.LEFT_ALIGNMENT);
+        typeSelector.setBackground(new Color(240,240,240));
 
-        //Radio buttons
         biomeBtn = new JRadioButton("Biome");
         creatureBtn = new JRadioButton("Creature");
         ButtonGroup group1 = new ButtonGroup();
@@ -72,77 +82,73 @@ public class AddCardMenu extends JPanel implements ActionListener {
         biomeBtn.addActionListener(this);
         creatureBtn.addActionListener(this);
 
-        JPanel radioButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        radioButtonPanel.add(biomeBtn);
-        radioButtonPanel.add(creatureBtn);
-        radioButtonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-
-        row1.add(radioButtonPanel);
-        formPanel.add(row1);
+        typeSelector.add(new JLabel("Select Card Type: "));
+        typeSelector.add(biomeBtn);
+        typeSelector.add(creatureBtn);
+        typeSelector.setAlignmentX(CENTER_ALIGNMENT);
+        formPanel.add(typeSelector);
         formPanel.add(Box.createRigidArea(new Dimension(0,10)));
 
-
-
-        add(formPanel,BorderLayout.CENTER);
-
+        JScrollPane scrollPane = new JScrollPane(formPanel);
+        scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
+    //method to style a pane with a consistent title border
+    private void stylePanel(JPanel panel, String title) {
+        TitledBorder border = BorderFactory.createTitledBorder(title);
+        border.setTitleFont(new Font("Segoe UI", Font.BOLD, 14));
+        border.setTitleColor(new Color(60, 60, 60));
+        border.setTitleJustification(TitledBorder.CENTER);
+        border.setTitlePosition(TitledBorder.TOP);
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                border,
+                BorderFactory.createEmptyBorder(8, 10, 8, 10)
+        ));
+        panel.setBackground(Color.WHITE);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        switch (command){
-            case "Main Menu":
-                cardLayout.show(parentPanel,"MainMenu");
-                break;
-
-            case "Add Card":
-                cardLayout.show(parentPanel,"addCardMenu");
-                break;
-            case "Delete Card":
-                cardLayout.show(parentPanel,"DeleteCardMenu");
-                break;
-
-            case "Edit Card":
-                cardLayout.show(parentPanel,"EditCardMenu");
-                break;
+        switch (command) {
+            case "Main Menu" -> cardLayout.show(parentPanel, "MainMenu");
+            case "Add Card" -> cardLayout.show(parentPanel, "AddCardMenu");
+            case "Delete Card" -> cardLayout.show(parentPanel, "DeleteCardMenu");
+            case "Edit Card" -> cardLayout.show(parentPanel, "EditCardMenu");
         }
 
-        if(e.getSource() == creature_addResourceBtn){
-            creature_addResource();
-        }
-        if(e.getSource() == creature_addAbilityBtn){
-            creature_addAbility();
-        }
-        if(e.getSource() == creature_addTagBtn){
-            addTag();
-        }
-        if (e.getSource() == creature_createCardBtn) {
-            creature_getFields();
-        }
-
-        //more if-statements for buttons
-
+        //switch creature and biome panels
         if(e.getSource() == biomeBtn) {
             if(biomePanel == null){
                 biomePanel = optionBiome();
                 formPanel.add(biomePanel);
             }
-            if(creaturePanel != null) {
-                creaturePanel.setVisible(false);
-                biomePanel.setVisible(true);
-            }
-        }
-        else if(e.getSource() == creatureBtn){
+            if(creaturePanel != null) creaturePanel.setVisible(false);
+            biomePanel.setVisible(true);
+        } else if(e.getSource() == creatureBtn){
             if(creaturePanel == null){
                 creaturePanel = optionCreature();
                 formPanel.add(creaturePanel);
             }
-            if(biomePanel != null){
-                biomePanel.setVisible(false);
-                creaturePanel.setVisible(true);
-            }
+            if(biomePanel != null) biomePanel.setVisible(false);
+            creaturePanel.setVisible(true);
+        }
+
+        // creature button events
+        if (e.getSource() == creature_addResourceBtn) creature_addResource();
+        if (e.getSource() == creature_addAbilityBtn) creature_addAbility();
+        if (e.getSource() == creature_addTagBtn) addTag();
+        if (e.getSource() == creature_createCardBtn){ creature_getFields();
+            System.out.println("clicked button Creats");
+        }
+
+        //biome button event
+        if (e.getSource() == biome_addResourceBtn) biome_addResource();
+        if (e.getSource() == biome_createCardBtn){
+            System.out.println("clicked button");
+            biome_getFields();
         }
 
         //repaints after btn changes
@@ -150,107 +156,123 @@ public class AddCardMenu extends JPanel implements ActionListener {
         formPanel.repaint();
     }
     private JPanel optionBiome(){
-
-        /*TODO CREATE FIELDS FOR BIOME CARD SCHEME
-        * id, name, type, imageUrl, biomeCategory, provides( Resource: ), abilities(name, type, cost), flavorText
-        * */
-        JPanel biomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(new Color(245,245,245));
 
         //name and id panel
-        JPanel biome_namesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        biome_namesPanel.add(new JLabel("id"));
+        JPanel namesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        namesPanel.add(new JLabel("ID:"));
         biome_idField = new JTextField(5);
-        biome_namesPanel.add(biome_idField);
-
-        biome_namesPanel.add(new JLabel("Card Name"));
+        namesPanel.add(biome_idField);
+        namesPanel.add(new JLabel("Name"));
         biome_nameField = new JTextField(10);
-        biome_namesPanel.add(biome_nameField);
+        namesPanel.add(biome_nameField);
+        stylePanel(namesPanel, "Id and Name");
 
         //resource panel
-        JPanel biome_resourcesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        biome_resourcesPanel.add(new JLabel("Resources")); //temphere
-        //biome_addResourceBtn = new JButton("Add Resource");
-       // biome_addResourceBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-       // biome_addResourceBtn.addActionListener(this);
+        biome_resourcePanel = new JPanel();
+        biome_resourcePanel.setLayout(new BoxLayout(biome_resourcePanel, BoxLayout.Y_AXIS));
+        biome_addResourceBtn = new JButton("Add Resource");
+        biome_addResourceBtn.addActionListener(this);
+        biome_resourcePanel.add(biome_addResourceBtn);
+        stylePanel(biome_resourcePanel, "Resources");
 
-        JPanel biome_abilityPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JTextField biome_abilityNameField = new JTextField(10);
-        biome_abilityPanel.add(new JLabel("Type"));
-        JComboBox<String> biome_activeType = new JComboBox<>(activeType);
-        biome_abilityPanel.add(biome_activeType);
+        //ability panel
 
-        biome_abilityPanel.add(new JLabel("Effect"));
 
-        biome_abilityPanel.add(new JLabel("Ability Name"));
-        JComboBox<String> biome_abilityType = new JComboBox<>(trueOrFales);
-        JTextField biome_abilityDesc = new JTextField(5);
-        biome_abilityPanel.add(biome_abilityType);
-        biome_abilityPanel.add(biome_abilityDesc);
+        JPanel abilityPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        abilityPanel.add(new JLabel("Ability Name"));
+        biome_abilityNameField = new JTextField(10);
+        abilityPanel.add(biome_abilityNameField);
 
-        //lista för JPanel och Borders
-        String[] titles_border = {
-                "Name and Type","Resource", "Ability", "Effect"};
-        JPanel[] panels = { /*JPanels in here*/};
+        abilityPanel.add(new JLabel("Type"));
+        biome_activeTypeField = new JComboBox<>(activeType);
+        abilityPanel.add(biome_activeTypeField);
+        stylePanel(abilityPanel, "Ability");
 
-        for (String s : titles_border) {
-            TitledBorder border = BorderFactory.createTitledBorder(s);
-            border.setTitleFont(new Font("Arial", Font.BOLD, 14));
-            border.setTitleColor(Color.BLACK);
-            border.setTitleJustification(TitledBorder.CENTER);
-            border.setTitlePosition(TitledBorder.TOP);
-            //panels[i].setBorder(border);
-        }
-        //debugging colors:
-        biomePanel.setBackground(Color.DARK_GRAY);
-        biome_namesPanel.setBackground(Color.YELLOW);
 
-        biomePanel.add(biome_namesPanel);
-        biomePanel.add(biome_resourcesPanel);
-        biomePanel.add(biome_abilityPanel);
+        //ability description
+        JPanel abilityDescPanel = new JPanel();
+        biome_abilityDescField = new JTextArea(5,20); //ability description FIELD
+        biome_abilityDescField.setLineWrap(true);
+        biome_abilityDescField.setWrapStyleWord(true);
+        JScrollPane abilityScroll = new JScrollPane(biome_abilityDescField);
+        abilityScroll.setPreferredSize(new Dimension(300,100)); // keeps it stable
+        abilityDescPanel.add(abilityScroll);
+        stylePanel(abilityDescPanel,"Ability Description");
 
-        return biomePanel;
+
+        JPanel flavorPanel = new JPanel();
+        biome_flavorTextField = new JTextArea(5,20); //Flavor FIELD
+        biome_flavorTextField.setLineWrap(true);
+        biome_flavorTextField.setWrapStyleWord(true);
+        JScrollPane flavorScrollPane = new JScrollPane(biome_flavorTextField);
+        flavorScrollPane.setPreferredSize(new Dimension(200,100)); // keeps it stable
+        flavorPanel.add(flavorScrollPane);
+        stylePanel(flavorPanel, "Flavor Text");
+
+        JPanel lastRow = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        biome_createCardBtn = new JButton("Create Card");
+        biome_createCardBtn.addActionListener(this);
+        lastRow.add(biome_createCardBtn);
+
+        //combine panels
+        panel.add(namesPanel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(biome_resourcePanel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(abilityPanel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(abilityDescPanel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(flavorPanel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(lastRow);
+
+        biome_addResource();
+        return panel;
     }
 
     private JPanel optionCreature(){
-        JPanel creaturePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-        //name and id panel
-        JPanel creature_namesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        creature_namesPanel.add(new JLabel("id:"));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(new Color(245, 245, 245));
+
+        //name and id
+        JPanel namesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        namesPanel.add(new JLabel("id:"));
         creature_cardIdField = new JTextField(5);
-        creature_namesPanel.add(creature_cardIdField);
-
-        creature_namesPanel.add(new JLabel("Card Name:"));
+        namesPanel.add(creature_cardIdField);
+        namesPanel.add(new JLabel("Card Name:"));
         creature_cardNameField = new JTextField(10);
-        creature_namesPanel.add(creature_cardNameField);
-
-        creature_namesPanel.add(new JLabel("Scientific Name:"));
+        namesPanel.add(creature_cardNameField);
+        namesPanel.add(new JLabel("Scientific Name:"));
         creature_scientificNameField = new JTextField(10);
-        creature_namesPanel.add(creature_scientificNameField);
-
-        creature_namesPanel.add(new JLabel("Card LVL"));
+        namesPanel.add(creature_scientificNameField);
+        namesPanel.add(new JLabel("Card LVL"));
         creature_input_cardLevelField = new JComboBox<>(level);
-        creature_namesPanel.add(creature_input_cardLevelField);
+        namesPanel.add(creature_input_cardLevelField);
+        stylePanel(namesPanel,"Id and Info");
 
-
-        //Resource panel
+        //cost panel
         creature_costPanel = new JPanel();
         creature_costPanel.setLayout(new BoxLayout(creature_costPanel,BoxLayout.Y_AXIS));
         creature_addResourceBtn = new JButton("Add Resource");
-        creature_addResourceBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         creature_addResourceBtn.addActionListener(this);
         creature_costPanel.add(creature_addResourceBtn);
+        stylePanel(creature_costPanel, "Cost");
 
         //evasionPanel
-        JPanel creature_evasionPanel = new JPanel();
-        creature_evasionPanel.setLayout(new BoxLayout(creature_evasionPanel,BoxLayout.Y_AXIS));
-        creature_evasionPanel.add(new JLabel("Evasion Name"));
+        JPanel evasionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        evasionPanel.add(new JLabel("Evasion Name"));
         creature_evasionName = new JTextField(10);
-        creature_evasionPanel.add(creature_evasionName);
-        creature_evasionPanel.add(new JLabel("Tap:"));
+        evasionPanel.add(creature_evasionName);
+        evasionPanel.add(new JLabel("Tap:"));
         creature_evasionType = new JComboBox<>(trueOrFales);
-        creature_evasionPanel.add(creature_evasionType);
-
+        evasionPanel.add(creature_evasionType);
+        stylePanel(evasionPanel,"Evasion");
 
         //ability panel
         creature_abilityPanel = new JPanel();
@@ -258,111 +280,75 @@ public class AddCardMenu extends JPanel implements ActionListener {
         creature_addAbilityBtn = new JButton("Add ability");
         creature_addAbilityBtn.addActionListener(this);
         creature_abilityPanel.add(creature_addAbilityBtn);
+        stylePanel(creature_abilityPanel, "Abilities");
 
-        //flavor panel
-        JPanel creature_flavorPanel = new JPanel();
-        flavorTextField = new JTextArea(5,20); //Flavor FIELD
-        flavorTextField.setLineWrap(true);
-        flavorTextField.setWrapStyleWord(true);
-        JScrollPane flavorScrollPane = new JScrollPane(flavorTextField);
-        flavorScrollPane.setPreferredSize(new Dimension(200,100)); // keeps it stable
-        creature_flavorPanel.add(new JLabel("Flavor Text:"));
-        creature_flavorPanel.add(flavorScrollPane);
 
-        //ability description panel
-        JPanel creature_abilityDescPanel = new JPanel();
-        abilityDesc_Text = new JTextArea(5,20); //ability description FIELD
-        abilityDesc_Text.setLineWrap(true);
-        abilityDesc_Text.setWrapStyleWord(true);
-        JScrollPane ability_DescScrollPane = new JScrollPane(abilityDesc_Text);
-        ability_DescScrollPane.setPreferredSize(new Dimension(200,100)); // keeps it stable
-        creature_abilityDescPanel.add(new JLabel("Ability Description:"));
-        creature_abilityDescPanel.add(ability_DescScrollPane);
+        JPanel flavorPanel = new JPanel();
+        creature_flavorTextField = new JTextArea(5, 20);
+        JScrollPane flavorScroll = new JScrollPane(creature_flavorTextField);
+        flavorScroll.setPreferredSize(new Dimension(300, 100));
+        flavorPanel.add(flavorScroll);
+        stylePanel(flavorPanel, "Flavor Text");
+
 
         //tags panel
         creature_tagsPanel = new JPanel();
         creature_tagsPanel.setLayout(new BoxLayout(creature_tagsPanel,BoxLayout.Y_AXIS));
-        creature_tagsPanel.add(new JLabel("tagName"));
         creature_addTagBtn = new JButton("Add Tag");
         creature_addTagBtn.addActionListener(this);
         creature_tagsPanel.add(creature_addTagBtn);
+       stylePanel(creature_tagsPanel, "Tags");
 
 
-        //UPLOAD
+        //upload row/
+        JPanel createCardRow = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         creature_createCardBtn = new JButton("Create Card");
-        JPanel creature_lastRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        creature_lastRow.setMaximumSize(new Dimension(180,50));
-        creature_lastRow.setBackground(Color.RED);
         creature_createCardBtn.addActionListener(this);
-        creature_lastRow.add(creature_createCardBtn);
+        createCardRow.add(creature_createCardBtn);
 
-        //putting panels and borders in List
-        String[] titles_border = {
-                "Name","Cost", "Evasion","Abilities","Flavor Text", "Ability Descriptor", "Tags"
-        };
-        JPanel[] panels ={
-                creature_namesPanel, creature_costPanel,creature_evasionPanel,
-                creature_abilityPanel,creature_flavorPanel, creature_abilityDescPanel,
-                creature_tagsPanel
-        };
-        //give each JPanel a border except lastRow
-        for(int i = 0; i < titles_border.length; i++){
-            TitledBorder border = BorderFactory.createTitledBorder(titles_border[i]);
-            border.setTitleFont(new Font("Arial", Font.BOLD, 14));
-            border.setTitleColor(Color.BLACK);
-            border.setTitleJustification(TitledBorder.CENTER);
-            border.setTitlePosition(TitledBorder.TOP);
-            panels[i].setBorder(border);
-        }
 
-        //add each JPanel to creaturePanel. Also adds lastRow
-        creaturePanel.add(creature_namesPanel);
-        creaturePanel.add(creature_costPanel);
-        creaturePanel.add(creature_evasionPanel);
-        creaturePanel.add(creature_abilityPanel);
-        creaturePanel.add(creature_flavorPanel);
-        creaturePanel.add(creature_abilityDescPanel);
-        creaturePanel.add(creature_tagsPanel);
-        creaturePanel.add(creature_lastRow);
+        // Add sections
+        panel.add(namesPanel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(creature_costPanel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(evasionPanel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(creature_abilityPanel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(creature_tagsPanel);
+        panel.add(Box.createVerticalStrut(20));
+        panel.add(flavorPanel);
+        panel.add(Box.createVerticalStrut(10));
 
-        //debugging backgrounds
-        formPanel.setBackground(Color.gray);
-        creaturePanel.setBackground(Color.darkGray);
-        creature_namesPanel.setBackground(Color.yellow);
-        creature_costPanel.setBackground(Color.pink);
-        creature_abilityPanel.setBackground(Color.red);
-        creature_lastRow.setBackground(Color.pink);
+        panel.add(createCardRow);
 
-        creature_addAbility();
+
         creature_addResource();
+        creature_addAbility();
         addTag();
-        return creaturePanel;
+        return panel;
     }
 
     //different functions
     private void creature_addAbility(){
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel label_abilityName = new JLabel("Name:");
-        JLabel label_abilityTap = new JLabel("Tappable:");
-        JLabel label_abilityEffect = new JLabel("Effect:");
+        panel.add(new JLabel("Name:"));
 
         JTextField add_abilityNameField = new JTextField(10);
-        JComboBox<String> add_abilityTappable = new JComboBox<>(trueOrFales);
+        JComboBox<String> add_abilityType = new JComboBox<>(activeType);
         JTextField add_abilityEffectField = new JTextField(10);
         JButton removeBtn = new JButton("Remove");
 
-
-        panel.add(label_abilityName);
         panel.add(add_abilityNameField);
-
-        panel.add(label_abilityTap);
-        panel.add(add_abilityTappable);
-        panel.add(label_abilityEffect);
+        panel.add(new JLabel("Tappable:"));
+        panel.add(add_abilityType);
+        panel.add(new JLabel("Effect:"));
 
         panel.add(add_abilityEffectField);
         panel.add(removeBtn);
         creature_abilityNameField.add(add_abilityNameField);
-        creature_abilityTappableField.add(add_abilityTappable);
+        creature_abilityTypeField.add(add_abilityType);
         creature_abilityEffectField.add(add_abilityEffectField);
 
 
@@ -382,14 +368,12 @@ public class AddCardMenu extends JPanel implements ActionListener {
     private void creature_addResource(){
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT
         ));
-        JLabel label_biome = new JLabel("Biome");
-        JLabel label_amount = new JLabel("Amount");
+        panel.add(new JLabel("Biome"));
         JComboBox<String> biomeTypeField = new JComboBox<>(biomeType);
-        JComboBox<String> amountField = new JComboBox<>(level);
-
-        panel.add(label_biome);
         panel.add(biomeTypeField);
-        panel.add(label_amount);
+
+        panel.add(new JLabel("Amount"));
+        JComboBox<String> amountField = new JComboBox<>(level);
         panel.add(amountField);
 
         //save to list
@@ -412,6 +396,35 @@ public class AddCardMenu extends JPanel implements ActionListener {
         creature_costPanel.add(panel);
         creature_costPanel.revalidate();
         creature_costPanel.repaint();
+    }
+    private void biome_addResource(){
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("Provides"));
+        JComboBox<String> biomeTypeField = new JComboBox<>(biomeType);
+        panel.add(biomeTypeField);
+
+        panel.add(new JLabel("Amount"));
+        JComboBox<String> amountField = new JComboBox<>(level);
+        panel.add(amountField);
+
+        biome_resourceField.add(biomeTypeField);
+        biome_resourceAmountField.add(amountField);
+
+        JButton removeBtn = new JButton("Remove");
+        panel.add(removeBtn);
+        removeBtn.addActionListener(e -> {
+            biome_resourcePanel.remove(panel);
+            biome_resourcePanel.revalidate();
+            biome_resourcePanel.repaint();
+
+            //remove references from lists
+            biome_resourceField.remove(biomeTypeField);
+            biome_resourceAmountField.remove(amountField);
+        });
+        biome_resourcePanel.add(panel);
+        biome_resourcePanel.revalidate();
+        biome_resourcePanel.repaint();
+
     }
     private void addTag(){
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT
@@ -444,7 +457,6 @@ public class AddCardMenu extends JPanel implements ActionListener {
         creature_tagsPanel.repaint();
     }
     public void creature_getFields(){
-       // CreatureCard c = creature_getInput();
 
         //create list for resources from GUI.
         ArrayList<Resource> resourcesList = new ArrayList<>();
@@ -461,7 +473,7 @@ public class AddCardMenu extends JPanel implements ActionListener {
         for (int i = 0; i < creature_abilityNameField.size(); i++) {
             Ability ab = new Ability();
             ab.setName(creature_abilityNameField.get(i).getText().trim());
-            ab.setTappable((String) creature_abilityTappableField.get(i).getSelectedItem());
+            ab.setType((String) creature_abilityTypeField.get(i).getSelectedItem());
             ab.setEffect(creature_abilityEffectField.get(i).getText());
             abilitiesList.add(ab);
         }
@@ -470,26 +482,66 @@ public class AddCardMenu extends JPanel implements ActionListener {
             tagsList.add(i.getText().trim());
         }
         //create creature card with inputs and pass the card to the card parser.
-        creatureCard card = cardInputs(resourcesList,abilitiesList,tagsList);
+        CreatureCard card = creatureCardInputs(resourcesList,abilitiesList,tagsList);
 
         CardParser p = new CardParser();
         p.parseCreatureJSON(card);
         System.out.println(card);
     }
-    private creatureCard cardInputs(ArrayList<Resource> res, ArrayList<Ability> abi, ArrayList<String> tag){
-        creatureCard c = new creatureCard();
+    public void biome_getFields() {
+        ArrayList<Resource> resourcesList = new ArrayList<>();
+        ArrayList<Ability> abilitiesList = new ArrayList<>();
+        Ability ab = new Ability();
+        ab.setName(biome_abilityNameField.getText());
+        ab.setType( (String) biome_activeTypeField.getSelectedItem());
+        ab.setEffect(biome_abilityDescField.getText());
+        abilitiesList.add(ab);
+
+        for (int i = 0; i < biome_resourceField.size(); i++) {
+            Resource r = new Resource();
+            r.setAmount((String) biome_resourceField.get(i).getSelectedItem());
+            r.setResource((String) biome_resourceAmountField.get(i).getSelectedItem());
+            resourcesList.add(r);
+        }
+
+        BiomeCard card = biomeCardInputs(resourcesList,abilitiesList);
+        CardParser p = new CardParser();
+        p.parseBiomeJSON(card);
+        System.out.println(card);
+
+    }
+
+
+    private BiomeCard biomeCardInputs(ArrayList<Resource> res, ArrayList<Ability> abi){
+        BiomeCard c = new BiomeCard();
+        c.setId(biome_idField.getText());
+        c.setName(biome_nameField.getText());
+        c.setFlavorText(biome_flavorTextField.getText());
+        c.setResources(res);
+        c.setAbilities(abi);
+
+        return c;
+    }
+
+
+    private CreatureCard creatureCardInputs(ArrayList<Resource> res, ArrayList<Ability> abi, ArrayList<String> tag){
+        CreatureCard c = new CreatureCard();
         c.setId(creature_cardIdField.getText().trim()); //;
-        c.setCardName(creature_cardNameField.getText().trim());
+        c.setName(creature_cardNameField.getText().trim());
         c.setScientificName(creature_scientificNameField.getText().trim());
         c.setCardLVL( (String) creature_input_cardLevelField.getSelectedItem());
-        c.setFlavorText(flavorTextField.getText().trim());
-        c.setAbilityDesc(abilityDesc_Text.getText().trim());
+        c.setFlavorText(creature_flavorTextField.getText().trim());
         c.setEvasionName(creature_evasionName.getText().trim());
         c.setEvasionType((String) creature_evasionType.getSelectedItem());
-        c.setResources(res);
         c.setTags(tag);
         c.setResources(res);
         c.setAbilities(abi);
+        /*TODO remove abilityDesc from creature option and
+            make evasionName and evasionType be an array of strings like tags. Group them basically*/
+
         return c;
     }
 }
+
+
+

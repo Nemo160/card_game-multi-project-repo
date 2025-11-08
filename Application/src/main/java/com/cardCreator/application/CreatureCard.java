@@ -6,9 +6,10 @@ import java.util.ArrayList;
 
 
 @Data
-public class creatureCard {
+public class CreatureCard {
     private String id;
-    private String cardName;
+    private final String category = "creature";
+    private String name;
     private String scientificName;
     private String cardLVL;
     private String evasionName;

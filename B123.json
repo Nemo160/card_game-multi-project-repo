@@ -1,0 +1,19 @@
+{
+  "id": "B123",
+  "category": "biome",
+  "name": "forest",
+  "flavorText": "regular forest",
+  "resources": [
+    {
+      "resource": "1",
+      "amount": "Forest"
+    }
+  ],
+  "abilities": [
+    {
+      "name": "nothgin21",
+      "Type": "passive",
+      "effect": "nothing"
+    }
+  ]
+}

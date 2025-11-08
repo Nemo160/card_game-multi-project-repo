@@ -8,13 +8,13 @@ import com.google.gson.GsonBuilder;
 
 public class CardParser {
     private final Gson gson;
-    private creatureCard cdt = new creatureCard();
+    private CreatureCard cdt = new CreatureCard();
 
 
     public CardParser(){
         gson = new GsonBuilder().setPrettyPrinting().create();
     }
-    public void parseCreatureJSON(creatureCard card){
+    public void parseCreatureJSON(CreatureCard card){
         try(FileWriter writer = new FileWriter(card.getId() + ".json")){
             gson.toJson(card,writer);
             System.out.println("Card saved as " +card.getId() + ".json");
@@ -26,7 +26,8 @@ public class CardParser {
     }
 
     public void parseBiomeJSON(BiomeCard card){
-        try(FileWriter writer = new FileWriter("card.getId()" + ".json")){
+
+        try(FileWriter writer = new FileWriter(card.getId() + ".json")){
             gson.toJson(card,writer);
             System.out.println("Card saved as " +card.getId() + ".json");
 
