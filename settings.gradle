@@ -1,0 +1,6 @@
+rootProject.name = "CardGame"
+
+include(":Backend")
+include(":Application")
+include(":common")
+project(":common").projectDir = file("common")
