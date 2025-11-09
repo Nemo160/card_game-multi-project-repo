@@ -1,16 +1,15 @@
-package com.cardCreator.application;
+package com.cardcreator.application.ui;
 
-import javax.smartcardio.Card;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class EditCardMenu extends JPanel implements ActionListener {
+public class DeleteCardMenu extends JPanel implements ActionListener {
     private CardLayout cardLayout;
     private JPanel parentPanel;
 
-    public EditCardMenu(CardLayout cardLayout, JPanel parentPanel){
+    public DeleteCardMenu(CardLayout cardLayout, JPanel parentPanel){
         this.cardLayout = cardLayout;
         this.parentPanel = parentPanel;
 
@@ -18,13 +17,13 @@ public class EditCardMenu extends JPanel implements ActionListener {
         add(new NavigationBar(this),BorderLayout.NORTH);
 
         JPanel content = new JPanel();
-        content.add(new JLabel("Edit Card Menu"));
+        content.add(new JLabel("delete card screen placeholder"));
         add(content,BorderLayout.CENTER);
 
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e){
         String command = e.getActionCommand();
         switch (command){
             case "Main Menu":

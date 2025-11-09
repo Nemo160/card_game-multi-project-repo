@@ -1,4 +1,4 @@
-package com.cardCreator.application;
+package com.cardcreator.application.model;
 
 import lombok.Data;
 

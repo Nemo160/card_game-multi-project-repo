@@ -1,4 +1,9 @@
-package com.cardCreator.application;
+package com.cardcreator.application.ui;
+import com.cardcreator.application.logic.CardParser;
+import com.cardcreator.application.model.Ability;
+import com.cardcreator.application.model.BiomeCard;
+import com.cardcreator.application.model.CreatureCard;
+import com.cardcreator.application.model.Resource;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

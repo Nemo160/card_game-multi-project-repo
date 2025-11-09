@@ -1,16 +1,14 @@
-package com.cardCreator.application;
+package com.cardcreator.application.ui;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.concurrent.Flow;
 
 public class NavigationBar extends JPanel {
     public NavigationBar(ActionListener listener) {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setBackground(new Color(230, 230, 230));
-       // setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         TitledBorder border = BorderFactory.createTitledBorder("Navigation Bar");
         border.setTitleFont(new Font("Arial", Font.BOLD, 14));
         border.setTitleColor(Color.BLACK);

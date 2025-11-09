@@ -1,3 +1,4 @@
+package com.cardCreator.application;
 
 import javax.swing.*;
 import java.awt.*;

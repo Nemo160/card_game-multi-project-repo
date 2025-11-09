@@ -1,4 +1,6 @@
-package com.cardCreator.application;
+package com.cardcreator.application;
+
+import com.cardcreator.application.ui.MainMenu;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.

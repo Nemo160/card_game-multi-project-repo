@@ -1,10 +1,8 @@
-package com.cardCreator.application;
+package com.cardcreator.application.ui;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
 
 public class MainMenu{
 

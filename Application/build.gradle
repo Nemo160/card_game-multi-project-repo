@@ -4,20 +4,22 @@ plugins {
     id("io.freefair.lombok") version "9.1.0"
 }
 
+group 'com.cardgame'
+version '1.0'
+
 repositories {
     mavenCentral()
 }
 
-application {
-    mainClass = 'com.cardCreator.application.Main'
-}
 
 dependencies {
-    //implementation project(':common')
-    //implementation project(':Backend')
+    implementation project(':Backend')
+    implementation project(':Common')
     implementation 'com.google.code.gson:gson:2.13.2'
-   // annotationProcessor("org.projectlombok:lombok:1.18.42")
+}
 
+application {
+    mainClass = 'com.cardCreator.application.Main'
 }
 
 jar {

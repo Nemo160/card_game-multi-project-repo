@@ -1,14 +1,16 @@
-package com.cardCreator.application;
+package com.cardcreator.application.logic;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.cardcreator.application.model.BiomeCard;
+import com.cardcreator.application.model.CreatureCard;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class CardParser {
     private final Gson gson;
-    private CreatureCard cdt = new CreatureCard();
+
 
 
     public CardParser(){

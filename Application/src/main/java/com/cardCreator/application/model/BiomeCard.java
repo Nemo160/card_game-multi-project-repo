@@ -1,8 +1,9 @@
-package com.cardCreator.application;
+package com.cardcreator.application.model;
 
 import lombok.Data;
 
 import java.util.ArrayList;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 public class BiomeCard {
