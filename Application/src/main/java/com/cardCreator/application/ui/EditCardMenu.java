@@ -6,8 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EditCardMenu extends JPanel implements ActionListener {
-    private CardLayout cardLayout;
-    private JPanel parentPanel;
+    private final CardLayout cardLayout;
+    private final JPanel parentPanel;
 
     public EditCardMenu(CardLayout cardLayout, JPanel parentPanel){
         this.cardLayout = cardLayout;

@@ -1,4 +1,4 @@
-package com.cardcreator.application.model;
+package com.cardgame.common.model;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @Data
 public class BiomeCard {
-    private String id;
+    private String biomeId;
     private final String category = "biome";
     private String name;
     private String flavorText;

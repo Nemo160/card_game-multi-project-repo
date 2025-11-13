@@ -1,9 +1,11 @@
 package com.cardcreator.application.ui;
+
+import com.cardcreator.application.logic.BackendClient;
 import com.cardcreator.application.logic.CardParser;
-import com.cardcreator.application.model.Ability;
-import com.cardcreator.application.model.BiomeCard;
-import com.cardcreator.application.model.CreatureCard;
-import com.cardcreator.application.model.Resource;
+import com.cardgame.common.model.Ability;
+import com.cardgame.common.model.BiomeCard;
+import com.cardgame.common.model.CreatureCard;
+import com.cardgame.common.model.Resource;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -48,7 +50,7 @@ public class AddCardMenu extends JPanel implements ActionListener {
 
     //constants
     private final String[] activeType = {"activated", "passive"};
-    private final String[] trueOrFales = {"true","false"};
+    private final String[] trueOrFalse = {"true","false"};
     private final String[] level = {"0","1","2","3","4","5"};
     private final String[] biomeType = {"Grassland","Forest", "Tundra","Desert","Urban","Freshwater","Marine"};
     private final String tagExample = (
@@ -69,7 +71,7 @@ public class AddCardMenu extends JPanel implements ActionListener {
         UIManager.put("Button.font", new Font("Segoe UI", Font.BOLD, 13));
         UIManager.put("TitledBorder.font", new Font("Segoe UI", Font.BOLD, 14));
 
-        add(new NavigationBar(this),BorderLayout.NORTH);
+        add(new NavigationBar(this), BorderLayout.NORTH);
 
         formPanel = new JPanel();
         formPanel.setLayout(new BoxLayout(formPanel,BoxLayout.Y_AXIS));
@@ -275,7 +277,7 @@ public class AddCardMenu extends JPanel implements ActionListener {
         creature_evasionName = new JTextField(10);
         evasionPanel.add(creature_evasionName);
         evasionPanel.add(new JLabel("Tap:"));
-        creature_evasionType = new JComboBox<>(trueOrFales);
+        creature_evasionType = new JComboBox<>(trueOrFalse);
         evasionPanel.add(creature_evasionType);
         stylePanel(evasionPanel,"Evasion");
 
@@ -491,6 +493,9 @@ public class AddCardMenu extends JPanel implements ActionListener {
 
         CardParser p = new CardParser();
         p.parseCreatureJSON(card);
+
+        BackendClient.sendCard(card,"creature");
+        System.out.println("card sent to server");
         System.out.println(card);
     }
     public void biome_getFields() {
@@ -519,7 +524,7 @@ public class AddCardMenu extends JPanel implements ActionListener {
 
     private BiomeCard biomeCardInputs(ArrayList<Resource> res, ArrayList<Ability> abi){
         BiomeCard c = new BiomeCard();
-        c.setId(biome_idField.getText());
+        c.setBiomeId(biome_idField.getText());
         c.setName(biome_nameField.getText());
         c.setFlavorText(biome_flavorTextField.getText());
         c.setResources(res);
@@ -531,7 +536,7 @@ public class AddCardMenu extends JPanel implements ActionListener {
 
     private CreatureCard creatureCardInputs(ArrayList<Resource> res, ArrayList<Ability> abi, ArrayList<String> tag){
         CreatureCard c = new CreatureCard();
-        c.setId(creature_cardIdField.getText().trim()); //;
+        c.setCreatureId(creature_cardIdField.getText().trim()); //;
         c.setName(creature_cardNameField.getText().trim());
         c.setScientificName(creature_scientificNameField.getText().trim());
         c.setCardLVL( (String) creature_input_cardLevelField.getSelectedItem());

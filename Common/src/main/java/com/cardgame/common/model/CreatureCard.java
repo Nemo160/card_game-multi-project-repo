@@ -1,4 +1,4 @@
-package com.cardcreator.application.model;
+package com.cardgame.common.model;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @Data
 public class CreatureCard {
-    private String id;
+    private String creatureId;
     private final String category = "creature";
     private String name;
     private String scientificName;

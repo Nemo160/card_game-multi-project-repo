@@ -1,9 +1,15 @@
 package com.cardgame.backend.repository;
 
 
-import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface BiomeCardRepository {
+import com.cardgame.common.model.BiomeCard;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+@Repository
+public interface BiomeCardRepository extends MongoRepository<BiomeCard,String>{
+
+    List<BiomeCard> findByBiomeId(String id);
 
 }
-//public interface BiomeCardRepository extends MongoRepository<BiomeCard, String> { }

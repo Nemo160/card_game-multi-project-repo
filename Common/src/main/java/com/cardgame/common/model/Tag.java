@@ -1,4 +1,4 @@
-package com.cardcreator.application.model;
+package com.cardgame.common.model;
 
 import lombok.Getter;
 import lombok.Setter;
